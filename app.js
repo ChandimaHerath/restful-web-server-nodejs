@@ -7,6 +7,8 @@ const courses =[
     {id:4, name:'Object Oriented programming'}
 ]
 
+app.use(express.json());
+
 //Get Methods
 
 //Get all courses
@@ -21,6 +23,20 @@ app.get('/api/courses/:id', (req,res)=>{
     return;
 }
    res.send(course)
+});
+
+
+
+//Post Method
+app.post('/api/courses', (req,res)=>{
+    const course = {
+        id: courses.length+1,
+        name: req.body.name
+    };
+
+    courses.push(course);
+    res.send(corse);
+     
 });
 
 

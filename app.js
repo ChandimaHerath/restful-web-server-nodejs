@@ -1,16 +1,27 @@
 const express = require('express');
 const app = express();
+const courses =[
+    {id:1, name:'Computer Programming'},
+    {id:2, name:'Web Developing'},
+    {id:3, name:'Image Processing'},
+    {id:4, name:'Object Oriented programming'}
+]
 
 //Get Methods
 
-app.get('/',(req,res)=>{
-    res.send('hello world')
-});
-
+//Get all courses
 app.get('/api/courses', (req,res)=>{
-    res.send([1,2,3]);
-});
+    res.send([courses]);
+});     
 
+//Get selected course
+app.get('/api/courses/:id', (req,res)=>{
+    const course = courses.find(c=>c.id=== parseInt(req.params.id));
+    if(!course){res.status(404).send('Course not found..!')
+    return;
+}
+   res.send(course)
+});
 
 
 //Server Listing to the client

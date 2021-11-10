@@ -18,7 +18,7 @@ This is a Server Application developed to describe the Restful web services , us
 * Open via vsCode or suitable IDE
 * Run npm install
 * Build and Run !
-* Test the Application Using Postman or any suitable API client.
+* Test the Application Using Postman or any    suitable API client.
 
 ----
 

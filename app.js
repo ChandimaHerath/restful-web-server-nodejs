@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const Joi = require('joi');
 const { join } = require('path/posix');
 const { resourceLimits } = require('worker_threads');
 const courses =[
@@ -32,34 +31,44 @@ app.get('/api/courses/:id', (req,res)=>{
 
 //Post Method
 app.post('/api/courses', (req,res)=>{
-//   if (!req.body.name||req.body.name.length<3){
+   if (!req.body.name||req.body.name.length<3){
         
-//          res.status(400).send('Name is required and name should be larger than 3 characters');
-//          return;
-//      }
-    
-    //schema for Joi to validate 
-    const schema = {
-    name : Joi.string().min(3).required()
-     };
-
-    //validating the request body using the schema  
-    const result = Joi.valid(req.body, schema);
-    
-    if(result.error){
-        res.status(400).send(result.error.details[0].message);
+         res.status(400).send('Name is required and name should be larger than 3 characters');
         return;
-    }
-
+     }  
     const course = {  
         id: courses.length+1,
         name: req.body.name
     };
-
     courses.push(course);
     res.send(course);
      
 });
+
+//Put method
+app.put('/api/courses:id' , (req,res)=>{
+ 
+   const course = courses.find(c=> c.id===parseInt(req.params.id));
+   if (!course){
+       res.status(404).send("Course not found...!");
+       return;
+   }
+
+   else if(!req.body.name||req.body.name.length<3){
+
+    res.status(400).send('Name is required and name should be larger than 3 characters');
+    return;
+   }
+
+   else{
+       course.name= req.body.name;
+       res.send(course);
+   }
+
+
+});
+
+
 
 
 //Server Listing to the client
